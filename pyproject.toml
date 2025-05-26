@@ -2,6 +2,67 @@
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[project]
+name = "bittytax-au"
+version = "1.0.0"
+description = "BittyTax Australian - Cryptocurrency tax calculator for Australian tax rules"
+dependencies = [
+    # Core UI and data processing
+    "PyQt6>=6.4.0",
+    "pandas>=2.0.0",
+    "matplotlib>=3.7.0",
+    
+    # Console and progress
+    "colorama",
+    "tqdm",
+    
+    # Network and data
+    "requests",
+    "pyyaml",
+    
+    # Python compatibility
+    "typing-extensions",
+    "setuptools",
+    
+    # Excel support
+    "xlsxwriter",
+    "openpyxl",
+    
+    # Date/time handling
+    "python-dateutil",
+    
+    # PDF and reporting
+    "jinja2",
+    "xhtml2pdf",
+    "reportlab",
+    
+    # Additional dependencies for full functionality
+    "webencodings",
+    "html5lib",
+    "pypdf2",
+    "pillow",
+    "lxml",
+    "beautifulsoup4",
+    "chardet",
+    "certifi",
+    "urllib3",
+    "idna",
+    "charset-normalizer",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-qt>=4.2.0",
+    "black",
+    "isort",
+    "mypy",
+]
+
+[project.scripts]
+bittytax-au = "bittytax.ui_main:main"
+bittytax-au-cli = "bittytax.bittytax:main"
+
 [tool.black]
 line-length = 100
 target-version = ['py37']

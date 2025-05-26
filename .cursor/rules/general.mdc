@@ -1,0 +1,72 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+meta:  
+  project_name: BittyTax Australian Conversion & UI Modernisation  
+  description: |  
+    This project is a work in progress to extend the open-source BittyTax cryptocurrency tax toolkit from UK/HMRC focus to support Australian Taxation Office (ATO) purposes. Goals include enabling compliant tax calculation/reporting for Australian crypto holders, adapting the software to Australian legal and fiscal contexts, and creating a basic user interface so non-technical staff can use the toolkit without command-line interaction.  
+  
+  goals:  
+    - Adapt core BittyTax logic and reporting for Australian tax rules (ATO), not UK (HMRC)  
+    - Use AUD for all computations, not GBP  
+    - Implement Australian CGT and income assessments, incl. ATO holding periods and (optional) CGT discount for assets held > 12 months  
+    - Adjust reporting periods to match Australian financial years (1 July–30 June)  
+    - Modernise UI via a basic, staff-friendly graphical interface (desktop or web)  
+    - Maintain clear, readable, and maintainable code to ease future extensions or audits  
+  
+rules:  
+  - name: "Code Orientation & Structure"  
+    applies_to: ["core", "UI", "adapters"]  
+    description: |  
+      Leverage existing BittyTax Python modules where feasible. Where replacement or override is needed for Australian rules, subclass or clearly fork relevant components.  
+    enforcement:  
+      - Prefer extension over modification: subclass, compose, or wrap wherever possible to preserve upstream merge potential.  
+      - All AU-specific logic should be logically grouped (e.g., under `au/`, `australia/`, or clearly-named classes/methods).  
+  
+  - name: "Tax Rule Localisation"  
+    description: |  
+      All fiscal computations and report logic must be clearly tagged as UK (legacy) or AU (new); avoid accidental mixing.  
+    enforcement:  
+      - Every section of code handling CGT, income, or disposals must have a comment or docstring indicating which country's regime is handled.  
+      - New config options (e.g., `jurisdiction: AU`) should default to AU when in Aussie deployments.  
+  
+  - name: "Currency Consistency"  
+    description: |  
+      All calculations and outputs intended for Australian users must use AUD. Only convert to other currencies where strictly required.  
+    enforcement:  
+      - Any calculations, fields, reports, or UI labels default to AUD.  
+      - Currency conversion logic must be auditable and configurable.  
+      - Currency constants (e.g., "GBP") present in code must be replaced by configuration lookups.  
+  
+  - name: "Testing & Auditability"  
+    description: |  
+      All core computational modules (parsing, pricing, CGT, reporting) must include unit and integration tests, especially for AU-specific cases and ATO edge cases.  
+    enforcement:  
+      - Tests must cover: holding period checks, CGT discount, cost base assignment, ATO tax year period handling, and correct file export formats.  
+      - All CI pipelines must run unit tests; Australian test suite required before merge.  
+  
+  - name: "User Interface Scope"  
+    description: |  
+      UI must allow staff to perform all typical BittyTax actions (conversion, editing, report generation) without CLI. UI code should be segregated from core business logic and provide clear error messages and next actions.  
+    enforcement:  
+      - Core tax logic must be callable independently of UI (for scriptability).  
+      - Prefer existing UI libraries in Python (Tkinter, PyQt, Flask) unless there is a reason to use alternatives.  
+      - Ensure all error messages are human-readable and actionable.  
+  
+  - name: "Documentation & Australianisation"  
+    description: |  
+      All new or modified features, config keys, and reports must be documented with Australian context in README and/or in-code documentation.  
+    enforcement:  
+      - All user-facing reports and UI elements must use Australian English (e.g., "ATO", "financial year", "CGT", "AUD").  
+      - README must include links to Australian guidance (ATO) and describe workflow changes for AU users.  
+  
+  - name: "Future-Proofing"  
+    description: |  
+      When implementing Australian logic, design with a view to supporting additional jurisdictions, should it be required.  
+    enforcement:  
+      - All new code handling tax rules should be modular and take a `jurisdiction` setting or similar.  
+      - Externalise jurisdiction-specific parameters (tax year start, asset holding periods, discount rates, etc.) to config files.  
+
+  
