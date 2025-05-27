@@ -1,4 +1,8 @@
-<h2>Income</h2>
+<h2>Income (Australian Tax Treatment)</h2>
+<p class="explanation">
+    For most individuals, the AUD value at receipt time is ordinary assessable income.
+    Subsequent disposal of these coins is a separate CGT event with cost base equal to the amount previously recognised as income.
+</p>
 {% set income = tax_report[tax_year]['Income'] %}
 {% for asset in income.assets|sort %}
     {% set asset_totals = namespace(events=0, quantity=0, amount=0, fees=0) %}

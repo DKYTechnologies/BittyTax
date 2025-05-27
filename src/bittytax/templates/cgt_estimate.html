@@ -1,16 +1,27 @@
 {% set cgains = tax_report[tax_year]['CapitalGains'] %}
-<h3>Tax Estimate</h3>
+<h3>Capital Gains Summary (Australian Tax Treatment)</h3>
 <p>
-    The figures below are only an estimate, they do not take into consideration other gains and losses in the same tax year, always consult with a professional accountant before filing.
+    The table below summarises your capital gains for the ATO schedule. There is no tax-free CGT allowance in Australia. The net capital gain (after losses & discount) is added to taxable income and taxed at marginal rates.
 </p>
-{% if not cgains.split_date %}
-    {% set cgt_estimate = cgains.cgt_estimate %}
-    {% include "cgt_estimate2.html" %}
-{% else %}
-    <h4>Gains before {{ cgains.split_date|datefilter2 }}</h4>
-    {% set cgt_estimate = cgains.cgt_estimate %}
-    {% include "cgt_estimate2.html" %}
-    <h4>Gains on or after {{ cgains.split_date|datefilter2 }}</h4>
-    {% set cgt_estimate = cgains.cgt_estimate_split %}
-    {% include "cgt_estimate2.html" %}
-{% endif %}
+<table width="60%" class="summary-table">
+    <tr>
+        <th align="left">Description</th>
+        <th align="right">Amount (AUD)</th>
+    </tr>
+    <tr>
+        <td>Gross capital gains</td>
+        <td align="right">{{ cgains.gross_gains|valuefilter }}</td>
+    </tr>
+    <tr>
+        <td>Capital losses</td>
+        <td align="right">{{ cgains.capital_losses|valuefilter }}</td>
+    </tr>
+    <tr>
+        <td>Discount applied</td>
+        <td align="right">{{ cgains.discount|valuefilter }}</td>
+    </tr>
+    <tr>
+        <td><b>Net capital gain</b></td>
+        <td align="right"><b>{{ cgains.net_capital_gain|valuefilter }}</b></td>
+    </tr>
+</table>

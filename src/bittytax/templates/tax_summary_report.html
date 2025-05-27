@@ -9,13 +9,8 @@
             <h2 class="date-range">
                 {{ config.get_tax_year_start(tax_year) |datefilter2 }} to {{ config.get_tax_year_end(tax_year) |datefilter2 }}
             </h2>
-            {% if args.tax_rules in TAX_RULES_UK_COMPANY %}
-                <h2>Chargeable Gains</h2>
-                {% include "capital_gains.html" %}
-            {% else %}
-                <h2>Capital Gains</h2>
-                {% include "capital_gains.html" %}
-            {% endif %}
+            <h2>Capital Gains</h2>
+            {% include "capital_gains.html" %}
             {% if not loop.last %}<pdf:nextpage />{% endif %}
         {% endfor %}
     </body>

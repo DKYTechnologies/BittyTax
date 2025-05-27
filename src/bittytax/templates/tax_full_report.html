@@ -12,15 +12,9 @@
             <h2 class="date-range">
                 {{ config.get_tax_year_start(tax_year) |datefilter2 }} to {{ config.get_tax_year_end(tax_year) |datefilter2 }}
             </h2>
-            {% if args.tax_rules in TAX_RULES_UK_COMPANY %}
-                <h2>Chargeable Gains</h2>
-                {% include "capital_gains.html" %}
-                {% include "ct_estimate.html" %}
-            {% else %}
-                <h2>Capital Gains</h2>
-                {% include "capital_gains.html" %}
-                {% include "cgt_estimate.html" %}
-            {% endif %}
+            <h2>Capital Gains</h2>
+            {% include "capital_gains.html" %}
+            {% include "cgt_estimate.html" %}
             {% include "income.html" %}
             {% include "margin_trading.html" %}
             {% if not loop.last %}<pdf:nextpage />{% endif %}

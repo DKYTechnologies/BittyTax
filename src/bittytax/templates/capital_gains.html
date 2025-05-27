@@ -1,4 +1,5 @@
 {% set cgains = tax_report[tax_year]['CapitalGains'] %}
+<h2>ATO Tax return (Individuals) – {{ tax_year }}: Item 18 ‘Capital gains or losses’</h2>
 {% for asset in cgains.assets|sort %}
     {% set asset_totals = namespace(disposals=0, quantity=0, cost=0, fees=0, proceeds=0, gain=0) %}
     <table repeat="1" width="100%" class="asset-table mt mb">
